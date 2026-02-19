@@ -23,8 +23,8 @@ const images = [
   { src: foto6, alt: 'Interni Chalet legno', span: 'col-span-1 row-span-1' },
   { src: foto8, alt: 'Piste sci seggiovie', span: 'col-span-2 row-span-1' },
   { src: foto1, alt: 'Strudel panna', span: 'col-span-1 row-span-1' },
-  { src: foto7, alt: 'Bombardini panna', span: 'col-span-1 row-span-1' },
-  { src: foto3, alt: 'Espresso terrazza', span: 'col-span-1 row-span-1' },
+  { src: foto7, alt: 'Bombardini panna', span: 'col-span-2 row-span-1' },
+  { src: foto3, alt: 'Espresso terrazza', span: 'col-span-2 row-span-1' },
 ]
 
 export default function Gallery() {
@@ -44,14 +44,14 @@ export default function Gallery() {
   }, [])
 
   return (
-    <section ref={sectionRef} id="gallery" style={{ padding: 'var(--space-section) 0', background: 'var(--color-wood-900)' }}>
-      <div style={{ padding: '0 var(--space-gutter)' }}>
-        <div className="flex items-end justify-between mb-10 md:mb-16">
-          <div>
-            <span className="label-sm block mb-4" style={{ color: 'var(--color-fire)' }}>Gallery</span>
-            <h2 className="display-lg text-white">Scatti dallo <em style={{ color: 'var(--color-wood-300)' }}>Chalet</em></h2>
-          </div>
-          <span className="hidden md:block text-white/20" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.65rem', letterSpacing: '0.1em' }}>{images.length} FOTO</span>
+    <section ref={sectionRef} id="gallery" className="relative texture-noise-dark texture-woodgrain inner-shadow-dark" style={{ padding: 'var(--space-section) 0', background: 'var(--color-wood-900)' }}>
+      {/* Ambient warm glow */}
+      <div className="absolute top-[20%] left-[20%] w-[400px] h-[400px] rounded-full opacity-[0.04] pointer-events-none blur-3xl" style={{ background: 'var(--color-fire)' }} />
+      <div className="relative z-10" style={{ padding: '0 var(--space-gutter)' }}>
+        <div className="mb-10 md:mb-16 text-center">
+          <span className="label-sm block mb-4" style={{ color: 'var(--color-fire)' }}>Gallery</span>
+          <h2 className="display-lg text-white">Scatti dallo <em style={{ color: 'var(--color-wood-300)' }}>Chalet</em></h2>
+          <span className="inline-block mt-4 text-white/40" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.65rem', letterSpacing: '0.1em' }}>{images.length} FOTO</span>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 auto-rows-[clamp(150px,20vw,250px)]">

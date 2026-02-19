@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -6,6 +6,22 @@ gsap.registerPlugin(ScrollTrigger)
 
 export default function Footer() {
   const footerRef = useRef(null)
+  const [formData, setFormData] = useState({ nome: '', email: '', messaggio: '' })
+  const [sending, setSending] = useState(false)
+  const [sent, setSent] = useState(false)
+
+  const handleChange = (e) => setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setSending(true)
+    setTimeout(() => {
+      setSending(false)
+      setSent(true)
+      setFormData({ nome: '', email: '', messaggio: '' })
+      setTimeout(() => setSent(false), 4000)
+    }, 1500)
+  }
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -16,59 +32,124 @@ export default function Footer() {
   }, [])
 
   return (
-    <footer ref={footerRef} style={{ background: 'var(--color-wood-900)' }}>
-      <div className="relative overflow-hidden" style={{ padding: 'var(--space-section) var(--space-gutter)' }}>
+    <footer ref={footerRef} className="relative texture-noise-dark texture-woodgrain" style={{ background: 'var(--color-wood-900)' }}>
+      {/* Warm glow from top */}
+      <div className="absolute top-0 left-[30%] w-[500px] h-[300px] rounded-full opacity-[0.05] pointer-events-none blur-3xl" style={{ background: 'var(--color-burgundy)' }} />
+      <div className="relative z-10 overflow-hidden" style={{ padding: 'var(--space-section) var(--space-gutter)' }}>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-[0.03] whitespace-nowrap" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(6rem, 15vw, 14rem)', color: 'white' }}>
           CHALET SAVOIA
         </div>
 
-        <div className="relative z-10 max-w-3xl">
-          <div className="overflow-hidden">
-            <span className="footer-title-line block text-white" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.5rem, 6vw + 0.5rem, 6rem)', lineHeight: 0.95 }}>Ti aspettiamo</span>
-          </div>
-          <div className="overflow-hidden">
-            <em className="footer-title-line block" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.5rem, 6vw + 0.5rem, 6rem)', lineHeight: 0.95, color: 'var(--color-fire)' }}>al Passo.</em>
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+          <div>
+            <div className="overflow-hidden">
+              <span className="footer-title-line block text-white" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.5rem, 6vw + 0.5rem, 6rem)', lineHeight: 0.95 }}>Ti aspettiamo</span>
+            </div>
+            <div className="overflow-hidden">
+              <em className="footer-title-line block" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.5rem, 6vw + 0.5rem, 6rem)', lineHeight: 0.95, color: 'var(--color-fire)' }}>al Passo.</em>
+            </div>
+
+            <p className="footer-fade body-text text-white/65 mt-6 md:mt-10 max-w-md">Vieni a scaldarti con una pizza al forno a legna, un bombardino o una cioccolata calda — direttamente sulle piste del Tonale.</p>
+
+            <div className="footer-fade flex flex-wrap gap-4 mt-8">
+              <a href="tel:+393397166992" className="inline-block border border-white/20 text-white px-7 py-3 hover:bg-white hover:text-[#2d1a12] transition-all duration-500" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.7rem', letterSpacing: '0.18em', textTransform: 'uppercase' }}>Chiama Ora</a>
+              <a href="#posizione" className="inline-block text-white/60 px-7 py-3 hover:text-white transition-colors duration-500" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.7rem', letterSpacing: '0.18em', textTransform: 'uppercase' }}>Come Raggiungerci →</a>
+            </div>
           </div>
 
-          <p className="footer-fade body-text text-white/40 mt-6 md:mt-10 max-w-md">Vieni a scaldarti con una pizza al forno a legna, un bombardino o una cioccolata calda — direttamente sulle piste del Tonale.</p>
-
-          <div className="footer-fade flex flex-wrap gap-4 mt-8">
-            <a href="tel:+393397166992" className="inline-block border border-white/20 text-white px-7 py-3 hover:bg-white hover:text-[#2d1a12] transition-all duration-500" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.7rem', letterSpacing: '0.18em', textTransform: 'uppercase' }}>Chiama Ora</a>
-            <a href="#posizione" className="inline-block text-white/40 px-7 py-3 hover:text-white transition-colors duration-500" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.7rem', letterSpacing: '0.18em', textTransform: 'uppercase' }}>Come Raggiungerci →</a>
+          <div className="footer-fade">
+            <span className="block mb-6" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.65rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--color-fire)' }}>Scrivici un messaggio</span>
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div>
+                <label htmlFor="footer-nome" className="block mb-2 text-white/50" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.6rem', letterSpacing: '0.12em', textTransform: 'uppercase' }}>Nome</label>
+                <input
+                  id="footer-nome"
+                  type="text"
+                  name="nome"
+                  value={formData.nome}
+                  onChange={handleChange}
+                  required
+                  className="w-full bg-white/[0.06] border border-white/10 text-white px-4 py-3 outline-none transition-all duration-500 focus:border-white/30 focus:bg-white/[0.08] placeholder:text-white/20"
+                  style={{ fontFamily: 'var(--font-body)', fontSize: '0.9rem' }}
+                  placeholder="Il tuo nome"
+                />
+              </div>
+              <div>
+                <label htmlFor="footer-email" className="block mb-2 text-white/50" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.6rem', letterSpacing: '0.12em', textTransform: 'uppercase' }}>Email</label>
+                <input
+                  id="footer-email"
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  className="w-full bg-white/[0.06] border border-white/10 text-white px-4 py-3 outline-none transition-all duration-500 focus:border-white/30 focus:bg-white/[0.08] placeholder:text-white/20"
+                  style={{ fontFamily: 'var(--font-body)', fontSize: '0.9rem' }}
+                  placeholder="La tua email"
+                />
+              </div>
+              <div>
+                <label htmlFor="footer-messaggio" className="block mb-2 text-white/50" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.6rem', letterSpacing: '0.12em', textTransform: 'uppercase' }}>Messaggio</label>
+                <textarea
+                  id="footer-messaggio"
+                  name="messaggio"
+                  value={formData.messaggio}
+                  onChange={handleChange}
+                  required
+                  rows={4}
+                  className="w-full bg-white/[0.06] border border-white/10 text-white px-4 py-3 outline-none transition-all duration-500 focus:border-white/30 focus:bg-white/[0.08] placeholder:text-white/20 resize-none"
+                  style={{ fontFamily: 'var(--font-body)', fontSize: '0.9rem' }}
+                  placeholder="Come possiamo aiutarti?"
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={sending}
+                className="w-full py-4 text-white transition-all duration-500 hover:opacity-80 disabled:opacity-50"
+                style={{ background: 'var(--color-burgundy)', fontFamily: 'var(--font-accent)', fontSize: '0.7rem', letterSpacing: '0.18em', textTransform: 'uppercase', boxShadow: '0 6px 24px rgba(155, 27, 60, 0.25)' }}
+              >
+                {sending ? 'Invio in corso...' : sent ? '✓ Messaggio Inviato!' : 'Invia Messaggio'}
+              </button>
+              {sent && (
+                <p className="text-center text-white/50" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.6rem', letterSpacing: '0.1em' }}>
+                  Ti risponderemo il prima possibile
+                </p>
+              )}
+            </form>
           </div>
         </div>
       </div>
 
-      <div className="border-t border-white/[0.08]" style={{ padding: 'clamp(2rem, 5vw, 4rem) var(--space-gutter)' }}>
+      <div className="relative z-10 border-t border-white/[0.08]" style={{ padding: 'clamp(2rem, 5vw, 4rem) var(--space-gutter)' }}>
         <div className="grid grid-cols-2 md:grid-cols-12 gap-8 md:gap-4">
           <div className="col-span-2 md:col-span-3 footer-fade">
             <span className="block text-white" style={{ fontFamily: 'var(--font-display)', fontSize: '1.3rem' }}>Chalet Savoia</span>
-            <span className="block text-white/30 mt-1" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.6rem', letterSpacing: '0.2em', textTransform: 'uppercase' }}>Passo del Tonale — 1884m</span>
+            <span className="block text-white/50 mt-1" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.6rem', letterSpacing: '0.2em', textTransform: 'uppercase' }}>Passo del Tonale — 1884m</span>
           </div>
 
           <div className="md:col-span-2 md:col-start-5 footer-fade">
-            <span className="block text-white/30 mb-3" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.6rem', letterSpacing: '0.15em', textTransform: 'uppercase' }}>Naviga</span>
+            <span className="block text-white/50 mb-3" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.6rem', letterSpacing: '0.15em', textTransform: 'uppercase' }}>Naviga</span>
             <div className="space-y-2">
               {['Menu', 'Chi Siamo', 'Posizione', 'Gallery', 'Contatti'].map(link => (
-                <a key={link} href={`#${link.toLowerCase().replace(' ', '-')}`} className="block text-white/40 hover:text-white transition-colors text-sm" style={{ fontFamily: 'var(--font-body)' }}>{link}</a>
+                <a key={link} href={`#${link.toLowerCase().replace(' ', '-')}`} className="block text-white/60 hover:text-white transition-colors text-sm" style={{ fontFamily: 'var(--font-body)' }}>{link}</a>
               ))}
             </div>
           </div>
 
           <div className="md:col-span-3 md:col-start-8 footer-fade">
-            <span className="block text-white/30 mb-3" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.6rem', letterSpacing: '0.15em', textTransform: 'uppercase' }}>Contatti</span>
-            <p className="text-white/40 text-sm leading-relaxed" style={{ fontFamily: 'var(--font-body)' }}>Via Case Sparse del Tonale, 106<br />25056 Passo del Tonale (BS)</p>
-            <a href="tel:+393397166992" className="block text-white/40 hover:text-white text-sm mt-2 transition-colors" style={{ fontFamily: 'var(--font-body)' }}>+39 339 716 6992</a>
+            <span className="block text-white/50 mb-3" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.6rem', letterSpacing: '0.15em', textTransform: 'uppercase' }}>Contatti</span>
+            <p className="text-white/60 text-sm leading-relaxed" style={{ fontFamily: 'var(--font-body)' }}>Via Case Sparse del Tonale, 106<br />25056 Passo del Tonale (BS)</p>
+            <a href="tel:+393397166992" className="block text-white/60 hover:text-white text-sm mt-2 transition-colors" style={{ fontFamily: 'var(--font-body)' }}>+39 339 716 6992</a>
           </div>
 
           <div className="md:col-span-2 md:col-start-11 footer-fade">
-            <span className="block text-white/30 mb-3" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.6rem', letterSpacing: '0.15em', textTransform: 'uppercase' }}>Stagioni</span>
-            <p className="text-white/40 text-xs leading-relaxed" style={{ fontFamily: 'var(--font-body)' }}>Inverno: Dic — Apr<br />Estate: Giu — Set</p>
+            <span className="block text-white/50 mb-3" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.6rem', letterSpacing: '0.15em', textTransform: 'uppercase' }}>Stagioni</span>
+            <p className="text-white/60 text-xs leading-relaxed" style={{ fontFamily: 'var(--font-body)' }}>Inverno: Dic — Apr<br />Estate: Giu — Set</p>
             <div className="flex gap-3 mt-4">
-              <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="text-white/20 hover:text-white/60 transition-colors" aria-label="Facebook">
+              <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white/70 transition-colors" aria-label="Facebook">
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
               </a>
-              <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className="text-white/20 hover:text-white/60 transition-colors" aria-label="Instagram">
+              <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white/70 transition-colors" aria-label="Instagram">
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
               </a>
             </div>
@@ -76,10 +157,10 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 pt-6 border-t border-white/5 flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
-          <p className="text-white/15 text-xs" style={{ fontFamily: 'var(--font-accent)' }}>© {new Date().getFullYear()} Chalet Savoia — Passo del Tonale</p>
+          <p className="text-white/30 text-xs" style={{ fontFamily: 'var(--font-accent)' }}>© {new Date().getFullYear()} Chalet Savoia — Passo del Tonale</p>
           <div className="flex gap-4">
-            <a href="#" className="text-white/15 hover:text-white/30 text-xs transition-colors" style={{ fontFamily: 'var(--font-accent)' }}>Privacy</a>
-            <a href="#" className="text-white/15 hover:text-white/30 text-xs transition-colors" style={{ fontFamily: 'var(--font-accent)' }}>Cookie</a>
+            <a href="#" className="text-white/30 hover:text-white/30 text-xs transition-colors" style={{ fontFamily: 'var(--font-accent)' }}>Privacy</a>
+            <a href="#" className="text-white/30 hover:text-white/30 text-xs transition-colors" style={{ fontFamily: 'var(--font-accent)' }}>Cookie</a>
           </div>
         </div>
       </div>

@@ -38,7 +38,27 @@ function App() {
     })
     gsap.ticker.lagSmoothing(0)
 
+    // Handle anchor link clicks — scroll to top of section
+    const handleAnchorClick = (e) => {
+      const link = e.target.closest('a[href^="#"]')
+      if (!link) return
+      const href = link.getAttribute('href')
+      if (href === '#') {
+        e.preventDefault()
+        lenis.scrollTo(0, { offset: 0 })
+        return
+      }
+      const target = document.querySelector(href)
+      if (target) {
+        e.preventDefault()
+        lenis.scrollTo(target, { offset: 0 })
+      }
+    }
+
+    document.addEventListener('click', handleAnchorClick)
+
     return () => {
+      document.removeEventListener('click', handleAnchorClick)
       lenis.destroy()
       gsap.ticker.remove(lenis.raf)
     }
