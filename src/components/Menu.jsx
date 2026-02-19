@@ -9,10 +9,10 @@ import bombardinoImg from '../assets/foto/foto-7.webp'
 gsap.registerPlugin(ScrollTrigger)
 
 const items = [
-  { title: 'Pizza al Forno a Legna', desc: 'Il punto forte. Impasto morbido e friabile, cottura su forno a legna. La "Pizza Tonale" è la più amata.', image: pizzaImg, alt: 'Pizza con prosciutto crudo rucola e parmigiano', tags: ['Impasto artigianale', 'Forno a legna', 'Pizza Tonale'] },
-  { title: 'Taglieri & Piatti', desc: 'Salumi e formaggi locali, lasagna, polenta, zuppe calde, panini, bruschette. Il gusto della montagna.', image: tagliereImg, alt: 'Tagliere di salumi e formaggi', tags: ['Prodotti locali', 'Polenta', 'Zuppe'] },
-  { title: 'Colazioni & Dolci', desc: 'Cappuccino cremoso, espresso, torte fatte in casa, cheesecake. La cioccolata calda è leggendaria.', image: strudelImg, alt: 'Strudel con panna e bevande calde', tags: ['Torte fatte in casa', 'Cioccolata calda', 'Brunch'] },
-  { title: 'Après-ski', desc: 'Birre artigianali "First", bombardino, vin brulé, bevande calde. Birre fresche e cocktail in estate.', image: bombardinoImg, alt: 'Bombardini con panna sul tavolo', tags: ['Birre artigianali', 'Bombardino', 'Vin brulé'] },
+  { title: 'Pizza al Forno a Legna', desc: 'Il punto forte. Impasto morbido e friabile, cottura su forno a legna. La "Pizza Tonale" è la più amata.', image: pizzaImg, alt: 'Pizza con prosciutto crudo rucola e parmigiano', title_attr: 'Pizza al forno a legna dello Chalet Savoia', tags: ['Impasto artigianale', 'Forno a legna', 'Pizza Tonale'] },
+  { title: 'Taglieri & Piatti', desc: 'Salumi e formaggi locali, lasagna, polenta, zuppe calde, panini, bruschette. Il gusto della montagna.', image: tagliereImg, alt: 'Tagliere di salumi e formaggi', title_attr: 'Tagliere di prodotti locali', tags: ['Prodotti locali', 'Polenta', 'Zuppe'] },
+  { title: 'Colazioni & Dolci', desc: 'Cappuccino cremoso, espresso, torte fatte in casa, cheesecake. La cioccolata calda è leggendaria.', image: strudelImg, alt: 'Strudel con panna e bevande calde', title_attr: 'Strudel e dolci fatti in casa', tags: ['Torte fatte in casa', 'Cioccolata calda', 'Brunch'] },
+  { title: 'Après-ski', desc: 'Birre artigianali "First", bombardino, vin brulé, bevande calde. Birre fresche e cocktail in estate.', image: bombardinoImg, alt: 'Bombardini con panna sul tavolo', title_attr: 'Bombardino e birre artigianali', tags: ['Birre artigianali', 'Bombardino', 'Vin brulé'] },
 ]
 
 export default function Menu() {
@@ -67,7 +67,7 @@ export default function Menu() {
             return (
               <div key={i} className="menu-item grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-start">
                 <div className={`relative overflow-hidden ${isEven ? 'md:col-span-7 md:col-start-1' : 'md:col-span-6 md:col-start-7'}`} style={{ height: i === 0 ? 'clamp(300px, 40vw, 500px)' : 'clamp(250px, 35vw, 420px)', boxShadow: '0 12px 40px rgba(0,0,0,0.3)' }}>
-                  <img src={item.image} alt={item.alt} className="menu-item-img w-full h-[120%] object-cover" loading="lazy" />
+                  <img src={item.image} alt={item.alt} title={item.title_attr} width={1200} height={800} className="menu-item-img w-full h-[120%] object-cover" loading="lazy" />
                   {/* Warm tint overlay */}
                   <div className="absolute inset-0 pointer-events-none mix-blend-multiply opacity-[0.08]" style={{ background: 'linear-gradient(160deg, rgba(251,146,60,0.5), transparent 50%)' }} />
                 </div>

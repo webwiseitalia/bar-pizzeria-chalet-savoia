@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Lenis from '@studio-freight/lenis'
@@ -13,14 +14,16 @@ import Recensioni from './components/Recensioni'
 import Gallery from './components/Gallery'
 import Contatti from './components/Contatti'
 import Footer from './components/Footer'
+import CookieBanner from './components/CookieBanner'
+import PrivacyPolicy from './pages/PrivacyPolicy'
+import CookiePolicy from './pages/CookiePolicy'
 
 gsap.registerPlugin(ScrollTrigger)
 
-function App() {
+function HomePage() {
   const lenisRef = useRef(null)
 
   useEffect(() => {
-    // Initialize Lenis smooth scroll
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -30,7 +33,6 @@ function App() {
 
     lenisRef.current = lenis
 
-    // Connect Lenis to GSAP ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update)
 
     gsap.ticker.add((time) => {
@@ -38,7 +40,6 @@ function App() {
     })
     gsap.ticker.lagSmoothing(0)
 
-    // Handle anchor link clicks — scroll to top of section
     const handleAnchorClick = (e) => {
       const link = e.target.closest('a[href^="#"]')
       if (!link) return
@@ -77,7 +78,7 @@ function App() {
       <Contatti />
       <Footer />
 
-      {/* Mobile fixed call button — minimal, offset */}
+      {/* Mobile fixed call button */}
       <a
         href="tel:+393397166992"
         className="fixed bottom-5 right-5 z-50 md:hidden w-14 h-14 rounded-full flex items-center justify-center shadow-2xl transition-transform duration-300 active:scale-90"
@@ -89,6 +90,25 @@ function App() {
         </svg>
       </a>
     </div>
+  )
+}
+
+function App() {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/cookie-policy" element={<CookiePolicy />} />
+      </Routes>
+      <CookieBanner />
+    </>
   )
 }
 

@@ -3,8 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="apple-touch-icon" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Chalet Savoia — Bar, pizzeria a legna e punto ristoro al Passo del Tonale a 1.884 m, direttamente sulle piste da sci del comprensorio Pontedilegno-Tonale. Pizza al forno a legna, taglieri, après-ski e panorami mozzafiato sull'Adamello." />
+    <meta name="description" content="Chalet Savoia — Bar e pizzeria a legna al Passo del Tonale a 1.884m. Pizza al forno a legna, taglieri, après-ski e vista sull'Adamello." />
     <meta name="keywords" content="bar pizzeria Passo del Tonale, pizzeria Tonale piste sci, dove mangiare Passo del Tonale, après ski Tonale, bar Chalet Savoia Tonale, pizza forno a legna Tonale, ristorante piste Pontedilegno-Tonale" />
     <meta name="author" content="Chalet Savoia" />
     <meta name="robots" content="index, follow" />
@@ -12,17 +13,22 @@
 
     <!-- Open Graph -->
     <meta property="og:title" content="Chalet Savoia — Bar Pizzeria al Passo del Tonale" />
-    <meta property="og:description" content="Bar, pizzeria a legna e punto ristoro a 1.884 m, direttamente sulle piste da sci. Pizza al forno a legna, taglieri, après-ski e vista Adamello." />
+    <meta property="og:description" content="Bar, pizzeria a legna e punto ristoro a 1.884m, direttamente sulle piste da sci. Pizza al forno a legna, taglieri, après-ski e vista Adamello." />
     <meta property="og:type" content="restaurant" />
     <meta property="og:url" content="https://www.chaletsavoiatonale.it/" />
     <meta property="og:site_name" content="Chalet Savoia" />
     <meta property="og:locale" content="it_IT" />
     <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:image" content="https://www.chaletsavoiatonale.it/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Chalet Savoia — Bar Pizzeria al Passo del Tonale" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Chalet Savoia — Bar Pizzeria al Passo del Tonale" />
-    <meta name="twitter:description" content="Bar, pizzeria a legna e punto ristoro a 1.884 m, direttamente sulle piste da sci del Passo del Tonale." />
+    <meta name="twitter:description" content="Bar, pizzeria a legna e punto ristoro a 1.884m, direttamente sulle piste da sci del Passo del Tonale." />
+    <meta name="twitter:image" content="https://www.chaletsavoiatonale.it/og-image.jpg" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -30,6 +36,80 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
 
     <title>Chalet Savoia — Bar Pizzeria al Passo del Tonale | Sulle Piste da Sci</title>
+
+    <!-- JSON-LD Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Restaurant",
+      "name": "Chalet Savoia",
+      "description": "Bar e pizzeria a legna al Passo del Tonale a 1.884m. Pizza al forno a legna, taglieri, après-ski e vista sull'Adamello.",
+      "url": "https://www.chaletsavoiatonale.it",
+      "telephone": "+393397166992",
+      "email": "chaletsavoiatonale@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Via Case Sparse del Tonale, 106",
+        "addressLocality": "Passo del Tonale",
+        "postalCode": "25056",
+        "addressRegion": "BS",
+        "addressCountry": "IT"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 46.2589,
+        "longitude": 10.5959
+      },
+      "servesCuisine": ["Italiana", "Pizza"],
+      "priceRange": "€€",
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+          "opens": "08:00",
+          "closes": "22:00",
+          "validFrom": "2025-12-01",
+          "validThrough": "2026-04-30"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+          "opens": "08:00",
+          "closes": "22:00",
+          "validFrom": "2026-06-01",
+          "validThrough": "2026-09-30"
+        }
+      ],
+      "image": "https://www.chaletsavoiatonale.it/og-image.jpg",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.1",
+        "reviewCount": "450",
+        "bestRating": "5"
+      },
+      "hasMenu": {
+        "@type": "Menu",
+        "hasMenuSection": [
+          {
+            "@type": "MenuSection",
+            "name": "Pizza al Forno a Legna"
+          },
+          {
+            "@type": "MenuSection",
+            "name": "Taglieri & Piatti"
+          },
+          {
+            "@type": "MenuSection",
+            "name": "Colazioni & Dolci"
+          },
+          {
+            "@type": "MenuSection",
+            "name": "Après-ski"
+          }
+        ]
+      }
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>

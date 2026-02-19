@@ -52,7 +52,7 @@ export default function Posizione() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           <div className="lg:col-span-8 lg:col-start-1">
             <div className="pos-img relative overflow-hidden" style={{ aspectRatio: '16/9', boxShadow: '0 12px 40px rgba(45,26,18,0.15)' }}>
-              <img src={pisteImg} alt="Piste da sci del Passo del Tonale" className="w-full h-full object-cover" loading="lazy" />
+              <img src={pisteImg} alt="Piste da sci del Passo del Tonale" title="Comprensorio sciistico Pontedilegno-Tonale" width={1920} height={1080} className="w-full h-full object-cover" loading="lazy" />
               <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8" style={{ background: 'linear-gradient(to top, rgba(45,26,18,0.8), transparent)' }}>
                 <span className="text-white" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.2rem, 2vw, 1.8rem)' }}>Comprensorio Pontedilegno-Tonale</span>
                 <span className="block text-white/70 mt-1" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.65rem', letterSpacing: '0.1em', textTransform: 'uppercase' }}>100 km di piste · Ghiacciaio Presena 3.000m · Adamello Ski</span>

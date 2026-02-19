@@ -34,21 +34,21 @@ export default function Hero() {
 
   return (
     <section ref={sectionRef} id="hero" className="relative h-screen overflow-hidden">
-      <img ref={imgRef} src={heroImg} alt="Panorama invernale del Passo del Tonale" className="absolute inset-0 w-full h-full object-cover will-change-transform" />
+      <img ref={imgRef} src={heroImg} alt="Panorama invernale del Passo del Tonale" title="Panorama invernale Passo del Tonale" width={1920} height={1080} loading="eager" className="absolute inset-0 w-full h-full object-cover will-change-transform" />
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-[#2d1a12]" />
       {/* Film grain overlay */}
       <div className="absolute inset-0 z-[2] pointer-events-none opacity-20 mix-blend-overlay" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`, backgroundSize: '180px 180px' }} />
       {/* Vignette */}
       <div className="absolute inset-0 z-[2] pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.35) 100%)' }} />
 
-      <div className="relative z-10 h-full flex flex-col justify-end pb-16 md:pb-24" style={{ padding: '0 var(--space-gutter)', paddingBottom: 'clamp(4rem, 8vh, 6rem)' }}>
+      <div className="relative z-10 h-full flex flex-col items-center justify-center md:items-start md:justify-end pb-16 md:pb-24" style={{ padding: '0 var(--space-gutter)', paddingBottom: 'clamp(4rem, 8vh, 6rem)' }}>
         <div className="hero-label mb-6 md:mb-8">
           <span className="inline-block text-white/70 border-b border-white/30 pb-1" style={{ fontFamily: 'var(--font-accent)', fontSize: 'clamp(0.6rem, 0.8vw, 0.75rem)', letterSpacing: '0.25em', textTransform: 'uppercase' }}>
             Bar & Pizzeria a Legna — 1.884m s.l.m.
           </span>
         </div>
 
-        <h1 className="max-w-[90vw] md:max-w-[70vw] lg:max-w-[55vw]">
+        <h1 className="text-center md:text-left max-w-[90vw] md:max-w-[70vw] lg:max-w-[55vw]">
           <div className="overflow-hidden"><div className="hero-line display-xl text-white">La tua</div></div>
           <div className="overflow-hidden"><div className="hero-line display-xl text-white" style={{ fontStyle: 'italic' }}>baita al Passo</div></div>
           <div className="overflow-hidden mt-2">
@@ -58,11 +58,11 @@ export default function Hero() {
           </div>
         </h1>
 
-        <p className="hero-sub mt-6 md:mt-8 max-w-md text-white/70" style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(0.9rem, 1vw, 1.05rem)', lineHeight: 1.8, fontWeight: 400 }}>
+        <p className="hero-sub mt-6 md:mt-8 max-w-md text-center md:text-left text-white/70" style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(0.9rem, 1vw, 1.05rem)', lineHeight: 1.8, fontWeight: 400 }}>
           Pizza cotta nel forno a legna, taglieri, bevande calde e après-ski con vista sulle montagne dell'Adamello.
         </p>
 
-        <div className="flex flex-wrap gap-4 mt-8 md:mt-10">
+        <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-8 md:mt-10">
           <a href="#menu" className="hero-cta text-white border border-white/30 px-7 py-3 hover:bg-white hover:text-[#2d1a12] transition-all duration-500" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.7rem', letterSpacing: '0.18em', textTransform: 'uppercase', boxShadow: '0 0 30px rgba(255,255,255,0.05)' }}>
             Scopri il Menu
           </a>
@@ -85,7 +85,7 @@ export default function Hero() {
 
       <div className="hero-badge absolute bottom-8 right-6 md:right-16 z-10 hidden lg:block">
         <div className="relative w-36 h-24 overflow-hidden" style={{ clipPath: 'polygon(8% 0, 100% 0, 100% 100%, 0 100%)' }}>
-          <img src={chaletImg} alt="Chalet Savoia esterno" className="w-full h-full object-cover" />
+          <img src={chaletImg} alt="Chalet Savoia esterno" title="Esterno Chalet Savoia al Passo del Tonale" width={288} height={192} loading="eager" className="w-full h-full object-cover" />
         </div>
         <span className="block text-white/50 mt-2 text-right" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.55rem', letterSpacing: '0.1em' }}>EST. TONALE</span>
       </div>

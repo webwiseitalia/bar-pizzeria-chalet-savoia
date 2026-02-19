@@ -71,13 +71,13 @@ export default function ChiSiamo() {
             {/* Diagonal accent line behind image */}
             <div className="absolute -top-8 -right-8 w-[110%] h-[110%] pointer-events-none opacity-[0.08]" style={{ border: '1px solid var(--color-burgundy)', transform: 'rotate(-3deg)' }} />
             <div className="chi-img-main relative overflow-hidden shadow-2xl" style={{ aspectRatio: '4/5', maxHeight: '600px' }}>
-              <img src={interniImg} alt="Interni dello Chalet Savoia con travi in legno" className="chi-img-inner w-full h-[120%] object-cover" />
+              <img src={interniImg} alt="Interni dello Chalet Savoia con travi in legno" title="Interni in legno dello Chalet Savoia" width={800} height={1000} loading="lazy" className="chi-img-inner w-full h-[120%] object-cover" />
               {/* Warm tint overlay */}
               <div className="absolute inset-0 pointer-events-none mix-blend-multiply opacity-[0.06]" style={{ background: 'linear-gradient(135deg, var(--color-fire), transparent 60%)' }} />
             </div>
 
             <div className="chi-img-float absolute -bottom-10 -left-8 md:-left-20 w-40 md:w-56 shadow-2xl" style={{ zIndex: 2 }}>
-              <img src={chaletImg} alt="Esterno Chalet Savoia" className="w-full h-auto" />
+              <img src={chaletImg} alt="Esterno Chalet Savoia" title="Vista esterna dello Chalet Savoia" width={400} height={300} loading="lazy" className="w-full h-auto" />
             </div>
 
             <div className="absolute -top-4 -right-2 md:right-8 z-10">

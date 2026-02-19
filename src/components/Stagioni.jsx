@@ -41,7 +41,7 @@ export default function Stagioni() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-0">
           <div className="lg:col-span-7 lg:col-start-1 relative z-10">
             <div className="season-img-winter relative overflow-hidden" style={{ height: 'clamp(350px, 50vw, 580px)', boxShadow: '0 16px 50px rgba(23,37,84,0.2)' }}>
-              <img src={invernoImg} alt="Panorama invernale Passo del Tonale" className="w-full h-full object-cover" loading="lazy" />
+              <img src={invernoImg} alt="Panorama invernale Passo del Tonale" title="Inverno al Passo del Tonale" width={1920} height={1080} className="w-full h-full object-cover" loading="lazy" />
               <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(23,37,84,0.85) 0%, rgba(23,37,84,0.2) 50%, transparent 100%)' }} />
               <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
                 <span className="text-white/60" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.6rem', letterSpacing: '0.2em', textTransform: 'uppercase' }}>Dicembre — Aprile</span>
@@ -58,7 +58,7 @@ export default function Stagioni() {
 
           <div className="lg:col-span-6 lg:col-start-7 lg:-mt-16 lg:pt-32 relative z-20">
             <div className="season-img-summer relative overflow-hidden" style={{ height: 'clamp(300px, 40vw, 480px)', boxShadow: '0 16px 50px rgba(120,53,15,0.2)' }}>
-              <img src={espressoImg} alt="Caffè sulla terrazza" className="w-full h-full object-cover" loading="lazy" />
+              <img src={espressoImg} alt="Caffè sulla terrazza" title="Espresso in terrazza allo Chalet Savoia" width={1920} height={1080} className="w-full h-full object-cover" loading="lazy" />
               <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(120,53,15,0.85) 0%, rgba(120,53,15,0.2) 50%, transparent 100%)' }} />
               <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
                 <span className="text-white/60" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.6rem', letterSpacing: '0.2em', textTransform: 'uppercase' }}>Giugno — Settembre</span>

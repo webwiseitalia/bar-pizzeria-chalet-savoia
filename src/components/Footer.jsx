@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -159,8 +160,8 @@ export default function Footer() {
         <div className="mt-12 pt-6 border-t border-white/5 flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
           <p className="text-white/30 text-xs" style={{ fontFamily: 'var(--font-accent)' }}>© {new Date().getFullYear()} Chalet Savoia — Passo del Tonale</p>
           <div className="flex gap-4">
-            <a href="#" className="text-white/30 hover:text-white/30 text-xs transition-colors" style={{ fontFamily: 'var(--font-accent)' }}>Privacy</a>
-            <a href="#" className="text-white/30 hover:text-white/30 text-xs transition-colors" style={{ fontFamily: 'var(--font-accent)' }}>Cookie</a>
+            <Link to="/privacy-policy" className="text-white/30 hover:text-white/50 text-xs transition-colors" style={{ fontFamily: 'var(--font-accent)' }}>Privacy</Link>
+            <Link to="/cookie-policy" className="text-white/30 hover:text-white/50 text-xs transition-colors" style={{ fontFamily: 'var(--font-accent)' }}>Cookie</Link>
           </div>
         </div>
       </div>
