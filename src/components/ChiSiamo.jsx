@@ -1,75 +1,83 @@
+import { useEffect, useRef } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import interniImg from '../assets/foto/foto-6.webp'
 import chaletImg from '../assets/foto/foto-9.webp'
 
+gsap.registerPlugin(ScrollTrigger)
+
 export default function ChiSiamo() {
+  const sectionRef = useRef(null)
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo('.chi-text-block', { y: 80, opacity: 0 }, {
+        y: 0, opacity: 1, stagger: 0.2, duration: 1.2, ease: 'power3.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' },
+      })
+
+      gsap.fromTo('.chi-img-main', { clipPath: 'inset(0 100% 0 0)' }, {
+        clipPath: 'inset(0 0% 0 0)', duration: 1.6, ease: 'power4.inOut',
+        scrollTrigger: { trigger: '.chi-img-main', start: 'top 75%' },
+      })
+
+      gsap.fromTo('.chi-img-float', { y: 60, opacity: 0, rotate: 3 }, {
+        y: 0, opacity: 1, rotate: -2, duration: 1.4, ease: 'power3.out',
+        scrollTrigger: { trigger: '.chi-img-float', start: 'top 85%' },
+      })
+
+      gsap.to('.chi-img-inner', {
+        y: -50, ease: 'none',
+        scrollTrigger: { trigger: '.chi-img-main', start: 'top bottom', end: 'bottom top', scrub: true },
+      })
+    }, sectionRef)
+
+    return () => ctx.revert()
+  }, [])
+
   return (
-    <section id="chi-siamo" className="section-padding bg-snow-50">
-      <div className="container-custom">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Text */}
-          <div>
-            <span className="inline-block text-burgundy-700 font-body font-semibold text-sm uppercase tracking-[0.2em] mb-4">
-              Chi Siamo
-            </span>
-            <h2 className="section-title mb-6">
-              Un punto di riferimento{' '}
-              <span className="text-burgundy-700 italic">al Passo</span>
-            </h2>
-            <div className="space-y-4 text-wood-700 font-body text-base md:text-lg leading-relaxed">
-              <p>
-                Lo Chalet Savoia è un punto di riferimento al Passo del Tonale. Un locale in stile baita —
-                legno, atmosfera rustica montana, calore — dove fermarsi prima, durante o dopo una giornata
-                sulle piste. Di fronte alla ski area Pontedilegno-Tonale e al Sacrario Militare del Passo del Tonale.
-              </p>
-              <p>
-                Aperto sia in stagione invernale che estiva, lo Chalet è conosciuto per essere
-                <strong className="text-wood-900"> "sempre aperto"</strong> quando si arriva al Passo:
-                una certezza per sciatori, motociclisti, ciclisti ed escursionisti.
-              </p>
-              <p>
-                Il team — <span className="text-burgundy-700 font-semibold">Alessandra, Alessio, Max</span> e
-                lo staff — accoglie ogni ospite con cordialità e simpatia, in un ambiente che molte recensioni
-                descrivono come <em>"sentirsi a casa"</em>.
-              </p>
+    <section ref={sectionRef} id="chi-siamo" className="relative" style={{ padding: 'var(--space-section) 0', background: 'var(--color-cream)' }}>
+      <div style={{ padding: '0 var(--space-gutter)' }}>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-4">
+          <div className="lg:col-span-5 lg:col-start-1">
+            <div className="chi-text-block">
+              <span className="label-sm block mb-6" style={{ color: 'var(--color-burgundy)' }}>Chi Siamo</span>
+              <div className="rule-accent mb-8" />
             </div>
 
-            {/* Features */}
-            <div className="mt-8 grid grid-cols-2 gap-4">
-              {[
-                { icon: '🏔️', text: 'Stile baita alpina' },
-                { icon: '🔥', text: 'Atmosfera calda' },
-                { icon: '⛷️', text: 'Di fronte alle piste' },
-                { icon: '👨‍👩‍👦', text: 'Accoglienza familiare' },
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3 bg-wood-50 rounded-xl px-4 py-3">
-                  <span className="text-2xl">{item.icon}</span>
-                  <span className="text-sm font-medium text-wood-800">{item.text}</span>
-                </div>
+            <h2 className="chi-text-block display-lg" style={{ color: 'var(--color-wood-900)' }}>
+              Un punto di <em style={{ color: 'var(--color-burgundy)' }}>riferimento</em><br />al Passo
+            </h2>
+
+            <div className="chi-text-block mt-8 md:mt-12 space-y-5 body-text" style={{ color: 'var(--color-wood-600)', maxWidth: '480px' }}>
+              <p>Lo Chalet Savoia è un locale in stile baita — legno, atmosfera rustica montana, calore — dove fermarsi prima, durante o dopo una giornata sulle piste.</p>
+              <p>Di fronte alla ski area Pontedilegno-Tonale e al Sacrario Militare. Conosciuto per essere <strong style={{ color: 'var(--color-wood-900)' }}>"sempre aperto"</strong> quando si arriva al Passo: una certezza.</p>
+              <p>Il team — <span style={{ color: 'var(--color-burgundy)' }}>Alessandra, Alessio, Max</span> e lo staff — accoglie ogni ospite con cordialità, in un ambiente che molte recensioni descrivono come <em>"sentirsi a casa"</em>.</p>
+            </div>
+
+            <div className="chi-text-block mt-10 flex flex-wrap gap-x-6 gap-y-3">
+              {['Stile baita alpina', 'Atmosfera calda', 'Di fronte alle piste', 'Accoglienza familiare'].map((tag, i) => (
+                <span key={i} className="inline-block" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.68rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--color-wood-300)', borderBottom: '1px solid var(--color-wood-200)', paddingBottom: '4px' }}>
+                  {tag}
+                </span>
               ))}
             </div>
           </div>
 
-          {/* Images */}
-          <div className="relative">
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-              <img
-                src={interniImg}
-                alt="Interni dello Chalet Savoia con travi in legno e bancone pizzeria"
-                className="w-full h-[400px] md:h-[500px] object-cover"
-              />
+          <div className="lg:col-span-6 lg:col-start-7 relative mt-8 lg:mt-20">
+            <div className="chi-img-main relative overflow-hidden" style={{ aspectRatio: '4/5', maxHeight: '600px' }}>
+              <img src={interniImg} alt="Interni dello Chalet Savoia con travi in legno" className="chi-img-inner w-full h-[120%] object-cover" />
             </div>
-            {/* Floating card with chalet image */}
-            <div className="absolute -bottom-6 -left-6 md:-left-10 w-40 md:w-52 rounded-xl overflow-hidden shadow-xl border-4 border-white">
-              <img
-                src={chaletImg}
-                alt="Esterno dello Chalet Savoia al Passo del Tonale"
-                className="w-full h-28 md:h-36 object-cover"
-              />
+
+            <div className="chi-img-float absolute -bottom-10 -left-8 md:-left-20 w-40 md:w-56 shadow-2xl" style={{ zIndex: 2 }}>
+              <img src={chaletImg} alt="Esterno Chalet Savoia" className="w-full h-auto" />
             </div>
-            {/* Decorative badge */}
-            <div className="absolute -top-4 -right-4 md:-right-6 bg-burgundy-700 text-white rounded-full w-20 h-20 md:w-24 md:h-24 flex flex-col items-center justify-center shadow-lg">
-              <span className="text-xl md:text-2xl font-bold font-heading leading-none">1884</span>
-              <span className="text-[9px] md:text-[10px] uppercase tracking-wider mt-0.5">m s.l.m.</span>
+
+            <div className="absolute -top-4 -right-2 md:right-8 z-10">
+              <div className="flex flex-col items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-full" style={{ background: 'var(--color-burgundy)' }}>
+                <span className="text-white" style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem', lineHeight: 1 }}>1884</span>
+                <span className="text-white/50 mt-0.5" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.5rem', letterSpacing: '0.15em', textTransform: 'uppercase' }}>m s.l.m.</span>
+              </div>
             </div>
           </div>
         </div>

@@ -1,161 +1,87 @@
+import { useEffect, useRef } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
+
 const reviews = [
-  {
-    name: 'Marco R.',
-    rating: 5,
-    text: '"Pizza fantastica, cotta nel forno a legna come si deve. La Pizza Tonale è da provare assolutamente. Torneremo sicuramente!"',
-    source: 'Google',
-    date: 'Febbraio 2025',
-  },
-  {
-    name: 'Sarah K.',
-    rating: 5,
-    text: '"Best hot chocolate on the slopes! Cozy wooden interior, friendly staff. We stopped here every day during our ski holiday. Alessandra is lovely!"',
-    source: 'Google',
-    date: 'January 2025',
-  },
-  {
-    name: 'Giulia B.',
-    rating: 5,
-    text: '"Ci siamo fermati per un pranzo veloce e siamo rimasti colpiti. Tagliere ricco, bruschette ottime, bombardino perfetto dopo lo sci. Ambiente caldo e accogliente."',
-    source: 'Google',
-    date: 'Dicembre 2024',
-  },
-  {
-    name: 'Thomas W.',
-    rating: 4,
-    text: '"Great location right on the slopes. Wood-fired pizza was excellent. The terrace has an amazing view of the mountains. Reasonably priced for a ski resort."',
-    source: 'TripAdvisor',
-    date: 'March 2024',
-  },
-  {
-    name: 'Luca P.',
-    rating: 5,
-    text: '"Siamo del posto e lo Chalet Savoia è il nostro punto fisso al Tonale. Max e Alessio sono simpaticissimi, ti senti a casa. La pizza è la migliore del Passo!"',
-    source: 'Google',
-    date: 'Gennaio 2025',
-  },
-  {
-    name: 'Anna M.',
-    rating: 5,
-    text: '"Fermata obbligatoria per noi motociclisti. Birra fresca, panino super, vista pazzesca dalla terrazza. Sempre aperto e sempre con il sorriso!"',
-    source: 'Google',
-    date: 'Agosto 2024',
-  },
+  { text: 'Pizza fantastica, cotta nel forno a legna come si deve. La Pizza Tonale è da provare assolutamente.', name: 'Marco R.', source: 'Google' },
+  { text: 'Best hot chocolate on the slopes! Cozy wooden interior, friendly staff. Alessandra is lovely!', name: 'Sarah K.', source: 'Google' },
+  { text: 'Tagliere ricco, bruschette ottime, bombardino perfetto dopo lo sci. Ambiente caldo e accogliente.', name: 'Giulia B.', source: 'Google' },
+  { text: 'Great location right on the slopes. Wood-fired pizza was excellent. The terrace has an amazing view.', name: 'Thomas W.', source: 'TripAdvisor' },
+  { text: 'Lo Chalet Savoia è il nostro punto fisso al Tonale. Max e Alessio simpaticissimi, ti senti a casa.', name: 'Luca P.', source: 'Google' },
+  { text: 'Fermata obbligatoria per noi motociclisti. Birra fresca, panino super, vista pazzesca dalla terrazza.', name: 'Anna M.', source: 'Google' },
 ]
 
-function Stars({ count }) {
-  return (
-    <div className="flex gap-0.5">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <svg
-          key={i}
-          className={`w-4 h-4 ${i < count ? 'text-fire-400' : 'text-wood-200'}`}
-          fill="currentColor"
-          viewBox="0 0 20 20"
-        >
-          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-        </svg>
-      ))}
-    </div>
-  )
-}
+const positions = [
+  'md:col-span-5 md:col-start-1',
+  'md:col-span-4 md:col-start-7 md:mt-12',
+  'md:col-span-5 md:col-start-2 md:-mt-4',
+  'md:col-span-4 md:col-start-8 md:mt-8',
+  'md:col-span-5 md:col-start-1 md:-mt-6',
+  'md:col-span-4 md:col-start-6 md:mt-16',
+]
 
 export default function Recensioni() {
+  const sectionRef = useRef(null)
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo('.rec-title', { y: '100%' }, { y: '0%', duration: 1.2, stagger: 0.1, ease: 'power3.out', scrollTrigger: { trigger: sectionRef.current, start: 'top 65%' } })
+      document.querySelectorAll('.rec-card').forEach((card, i) => {
+        gsap.fromTo(card, { y: 60 + (i % 3) * 20, opacity: 0, rotate: (i % 2 === 0 ? -1 : 1) * (1 + Math.random()) }, {
+          y: 0, opacity: 1, rotate: 0, duration: 1.2, ease: 'power3.out', scrollTrigger: { trigger: card, start: 'top 85%' },
+        })
+      })
+      gsap.fromTo('.rec-badge', { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, stagger: 0.15, duration: 0.8, ease: 'back.out(1.4)', scrollTrigger: { trigger: '.rec-badge', start: 'top 85%' } })
+    }, sectionRef)
+    return () => ctx.revert()
+  }, [])
+
   return (
-    <section id="recensioni" className="section-padding bg-snow-50">
-      <div className="container-custom">
-        {/* Header */}
-        <div className="text-center mb-12 md:mb-16">
-          <span className="inline-block text-burgundy-700 font-body font-semibold text-sm uppercase tracking-[0.2em] mb-4">
-            Le Recensioni
-          </span>
-          <h2 className="section-title mb-4">
-            Cosa dicono <span className="text-burgundy-700 italic">i nostri ospiti</span>
+    <section ref={sectionRef} id="recensioni" style={{ padding: 'var(--space-section) 0', background: 'var(--color-wood-50)' }}>
+      <div style={{ padding: '0 var(--space-gutter)' }}>
+        <div className="mb-14 md:mb-20 md:ml-auto md:text-right" style={{ maxWidth: '600px' }}>
+          <span className="label-sm block mb-5" style={{ color: 'var(--color-burgundy)' }}>Le Voci</span>
+          <h2>
+            <div className="overflow-hidden"><span className="rec-title display-lg inline-block" style={{ color: 'var(--color-wood-900)' }}>Cosa dicono</span></div>
+            <div className="overflow-hidden"><em className="rec-title display-lg inline-block" style={{ color: 'var(--color-burgundy)' }}>i nostri ospiti</em></div>
           </h2>
-          <p className="section-subtitle mx-auto">
-            Centinaia di persone hanno condiviso la loro esperienza allo Chalet Savoia.
-          </p>
         </div>
 
-        {/* Rating Badges */}
-        <div className="flex flex-wrap justify-center gap-4 md:gap-6 mb-10 md:mb-14">
-          <div className="bg-white rounded-xl px-6 py-4 shadow-lg border border-wood-100 flex items-center gap-3">
-            <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center text-white font-bold text-lg">G</div>
-            <div>
-              <div className="flex items-center gap-1">
-                <span className="font-bold text-wood-900 text-lg">4.1</span>
-                <Stars count={4} />
-              </div>
-              <p className="text-wood-500 text-xs">~450 recensioni su Google</p>
+        <div className="flex flex-wrap gap-6 md:gap-10 mb-14 md:mb-20 items-end">
+          {[
+            { score: '4.1', label: 'Google', sub: '~450 recensioni', color: '#4285f4' },
+            { score: '4.0', label: 'TripAdvisor', sub: '', color: '#00a680' },
+            { score: '4.5', label: 'Restaurant Guru', sub: '', color: 'var(--color-fire)' },
+          ].map((badge, i) => (
+            <div key={i} className={`rec-badge ${i === 1 ? 'md:mt-8' : ''}`}>
+              <span style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', lineHeight: 1, color: badge.color }}>{badge.score}</span>
+              <span className="block mt-1" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.6rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--color-wood-300)' }}>{badge.label}</span>
+              {badge.sub && <span className="block" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.55rem', color: 'var(--color-wood-200)' }}>{badge.sub}</span>}
             </div>
-          </div>
-          <div className="bg-white rounded-xl px-6 py-4 shadow-lg border border-wood-100 flex items-center gap-3">
-            <div className="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center text-white font-bold text-lg">T</div>
-            <div>
-              <div className="flex items-center gap-1">
-                <span className="font-bold text-wood-900 text-lg">4.0</span>
-                <Stars count={4} />
-              </div>
-              <p className="text-wood-500 text-xs">TripAdvisor</p>
-            </div>
-          </div>
-          <div className="bg-white rounded-xl px-6 py-4 shadow-lg border border-wood-100 flex items-center gap-3">
-            <div className="w-10 h-10 bg-fire-500 rounded-lg flex items-center justify-center text-white font-bold text-lg">R</div>
-            <div>
-              <div className="flex items-center gap-1">
-                <span className="font-bold text-wood-900 text-lg">4.5</span>
-                <Stars count={5} />
-              </div>
-              <p className="text-wood-500 text-xs">Restaurant Guru</p>
-            </div>
-          </div>
+          ))}
         </div>
 
-        {/* Reviews Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {reviews.map((review, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-2xl p-6 shadow-lg border border-wood-100 hover:shadow-xl transition-shadow duration-300"
-            >
-              <Stars count={review.rating} />
-              <p className="mt-4 text-wood-700 text-sm leading-relaxed italic">
-                {review.text}
-              </p>
-              <div className="mt-4 pt-4 border-t border-wood-100 flex items-center justify-between">
-                <div>
-                  <p className="font-semibold text-wood-900 text-sm">{review.name}</p>
-                  <p className="text-wood-400 text-xs">{review.date}</p>
-                </div>
-                <span className="text-xs font-medium text-wood-400 bg-wood-50 px-2 py-1 rounded-full">
-                  {review.source}
-                </span>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-y-8 md:gap-6">
+          {reviews.map((review, i) => (
+            <div key={i} className={`rec-card ${positions[i]} p-6 md:p-8 border`} style={{ borderColor: 'var(--color-wood-100)', background: 'white' }}>
+              <span className="block mb-3" style={{ fontFamily: 'var(--font-display)', fontSize: '3rem', lineHeight: 0.5, color: 'var(--color-wood-200)' }}>&ldquo;</span>
+              <p className="body-text" style={{ color: 'var(--color-wood-700)', fontStyle: 'italic' }}>{review.text}</p>
+              <div className="mt-5 flex items-center justify-between">
+                <span className="text-sm font-medium" style={{ color: 'var(--color-wood-900)' }}>{review.name}</span>
+                <span style={{ fontFamily: 'var(--font-accent)', fontSize: '0.6rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--color-wood-300)' }}>{review.source}</span>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Recurring themes */}
-        <div className="mt-12 bg-gradient-to-br from-wood-50 to-wood-100 rounded-2xl p-6 md:p-8 border border-wood-200">
-          <h3 className="font-heading text-lg font-bold text-wood-900 mb-4 text-center">
-            I temi più apprezzati nelle recensioni
-          </h3>
-          <div className="flex flex-wrap justify-center gap-3">
-            {[
-              '🍕 Pizza al forno a legna',
-              '🏠 Ambiente caldo e rustico',
-              '☀️ Terrazza panoramica',
-              '😊 Staff simpatico e cordiale',
-              '☕ Cioccolata calda buonissima',
-              '✅ Sempre aperto e affidabile',
-              '💰 Prezzi onesti',
-              '🧹 Pulito e curato',
-            ].map((theme) => (
-              <span
-                key={theme}
-                className="bg-white text-wood-800 text-sm px-4 py-2 rounded-full shadow-sm border border-wood-200"
-              >
-                {theme}
+        <div className="mt-16 md:mt-24 md:ml-[20%] max-w-2xl">
+          <span className="label-sm block mb-5" style={{ color: 'var(--color-wood-300)' }}>Temi ricorrenti</span>
+          <div className="flex flex-wrap gap-x-5 gap-y-2">
+            {['Pizza al forno a legna', 'Ambiente caldo e rustico', 'Terrazza panoramica', 'Staff simpatico', 'Cioccolata calda', 'Sempre aperto', 'Prezzi onesti', 'Pulito e curato'].map((theme, i) => (
+              <span key={i} className="body-text" style={{ color: 'var(--color-wood-300)', borderBottom: i % 3 === 0 ? '1px solid var(--color-wood-200)' : 'none', paddingBottom: '2px' }}>
+                {theme}{i < 7 ? ' ·' : ''}
               </span>
             ))}
           </div>

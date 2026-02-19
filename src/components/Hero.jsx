@@ -1,90 +1,94 @@
+import { useEffect, useRef } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import heroImg from '../assets/foto/foto-5.webp'
+import chaletImg from '../assets/foto/foto-9.webp'
+
+gsap.registerPlugin(ScrollTrigger)
 
 export default function Hero() {
-  return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image */}
-      <div className="absolute inset-0">
-        <img
-          src={heroImg}
-          alt="Panorama invernale del Passo del Tonale con montagne innevate"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-wood-950/90" />
-      </div>
+  const sectionRef = useRef(null)
+  const imgRef = useRef(null)
 
-      {/* Content */}
-      <div className="relative z-10 container-custom px-4 sm:px-6 lg:px-8 text-center">
-        {/* Badge */}
-        <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-6 md:mb-8">
-          <svg className="w-4 h-4 text-fire-400" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-          </svg>
-          <span className="text-white/90 text-sm font-medium tracking-wide">1.884 m — Passo del Tonale</span>
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: 'power4.out' } })
+
+      tl.fromTo(imgRef.current, { scale: 1.3, filter: 'brightness(0.3)' }, { scale: 1, filter: 'brightness(0.65)', duration: 2.4 })
+        .fromTo('.hero-label', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 1 }, 0.6)
+        .fromTo('.hero-line', { y: '110%' }, { y: '0%', duration: 1.4, stagger: 0.12, ease: 'power3.out' }, 0.8)
+        .fromTo('.hero-sub', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 1.2 }, 1.6)
+        .fromTo('.hero-cta', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 1, stagger: 0.15 }, 1.9)
+        .fromTo('.hero-badge', { x: 30, opacity: 0 }, { x: 0, opacity: 1, duration: 1 }, 2.1)
+        .fromTo('.hero-scroll', { opacity: 0 }, { opacity: 1, duration: 1 }, 2.6)
+
+      gsap.to(imgRef.current, {
+        y: 150,
+        ease: 'none',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top top', end: 'bottom top', scrub: true },
+      })
+    }, sectionRef)
+
+    return () => ctx.revert()
+  }, [])
+
+  return (
+    <section ref={sectionRef} id="hero" className="relative h-screen overflow-hidden">
+      <img ref={imgRef} src={heroImg} alt="Panorama invernale del Passo del Tonale" className="absolute inset-0 w-full h-full object-cover will-change-transform" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-[#2d1a12]" />
+
+      <div className="relative z-10 h-full flex flex-col justify-end pb-16 md:pb-24" style={{ padding: '0 var(--space-gutter)', paddingBottom: 'clamp(4rem, 8vh, 6rem)' }}>
+        <div className="hero-label mb-6 md:mb-8">
+          <span className="inline-block text-white/50 border-b border-white/20 pb-1" style={{ fontFamily: 'var(--font-accent)', fontSize: 'clamp(0.6rem, 0.8vw, 0.75rem)', letterSpacing: '0.25em', textTransform: 'uppercase' }}>
+            Bar & Pizzeria a Legna — 1.884m s.l.m.
+          </span>
         </div>
 
-        {/* Headline */}
-        <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-          La tua baita al{' '}
-          <span className="text-fire-300">Passo del Tonale</span>
-          <br className="hidden md:block" />
-          <span className="block mt-2 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium italic text-white/90">
-            direttamente sulle piste
-          </span>
+        <h1 className="max-w-[90vw] md:max-w-[70vw] lg:max-w-[55vw]">
+          <div className="overflow-hidden"><div className="hero-line display-xl text-white">La tua</div></div>
+          <div className="overflow-hidden"><div className="hero-line display-xl text-white" style={{ fontStyle: 'italic' }}>baita al Passo</div></div>
+          <div className="overflow-hidden mt-2">
+            <div className="hero-line text-white/60" style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(1rem, 2vw, 1.6rem)', fontWeight: 300, letterSpacing: '0.05em' }}>
+              direttamente sulle piste da sci
+            </div>
+          </div>
         </h1>
 
-        {/* Subtitle */}
-        <p className="font-body text-base sm:text-lg md:text-xl text-white/80 max-w-3xl mx-auto mb-8 md:mb-10 leading-relaxed">
-          Bar, pizzeria a legna e punto ristoro a 1.884 m. Pizza cotta nel forno a legna,
-          bevande calde, taglieri e après-ski con vista sulle montagne dell'Adamello.
+        <p className="hero-sub mt-6 md:mt-8 max-w-md text-white/50" style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(0.85rem, 1vw, 1rem)', lineHeight: 1.8, fontWeight: 300 }}>
+          Pizza cotta nel forno a legna, taglieri, bevande calde e après-ski con vista sulle montagne dell'Adamello.
         </p>
 
-        {/* CTAs */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="#menu" className="btn-primary text-base px-8 py-4">
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-            </svg>
+        <div className="flex flex-wrap gap-4 mt-8 md:mt-10">
+          <a href="#menu" className="hero-cta text-white border border-white/30 px-7 py-3 hover:bg-white hover:text-[#2d1a12] transition-all duration-500" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.7rem', letterSpacing: '0.18em', textTransform: 'uppercase' }}>
             Scopri il Menu
           </a>
-          <a href="#posizione" className="btn-secondary text-base px-8 py-4">
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-            Come Raggiungerci
+          <a href="#posizione" className="hero-cta text-white/50 px-7 py-3 hover:text-white transition-colors duration-500" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.7rem', letterSpacing: '0.18em', textTransform: 'uppercase' }}>
+            Come Raggiungerci →
           </a>
         </div>
+      </div>
 
-        {/* Quick Info Bar */}
-        <div className="mt-12 md:mt-16 flex flex-wrap items-center justify-center gap-6 md:gap-10 text-white/70">
-          <div className="flex items-center gap-2">
-            <svg className="w-5 h-5 text-fire-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z" />
-            </svg>
-            <span className="text-sm font-medium">Forno a legna</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <svg className="w-5 h-5 text-fire-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-            </svg>
-            <span className="text-sm font-medium">Sulle piste</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <svg className="w-5 h-5 text-fire-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-            </svg>
-            <span className="text-sm font-medium">4.1 ★ Google</span>
+      <div className="hero-badge absolute top-1/3 right-4 md:right-12 z-10 hidden md:block">
+        <div className="w-28 h-28 rounded-full border border-white/15 flex flex-col items-center justify-center" style={{ background: 'rgba(169, 35, 71, 0.85)', backdropFilter: 'blur(10px)' }}>
+          <span className="text-white/90" style={{ fontFamily: 'var(--font-display)', fontSize: '1.8rem', lineHeight: 1 }}>4.1</span>
+          <span className="text-white/50 mt-0.5" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.55rem', letterSpacing: '0.15em', textTransform: 'uppercase' }}>Google</span>
+          <div className="flex gap-0.5 mt-1">
+            {[1,2,3,4].map(i => <span key={i} className="text-[8px]" style={{ color: 'var(--color-fire)' }}>★</span>)}
+            <span className="text-white/30 text-[8px]">★</span>
           </div>
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce">
-        <svg className="w-6 h-6 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-        </svg>
+      <div className="hero-badge absolute bottom-8 right-6 md:right-16 z-10 hidden lg:block">
+        <div className="relative w-36 h-24 overflow-hidden" style={{ clipPath: 'polygon(8% 0, 100% 0, 100% 100%, 0 100%)' }}>
+          <img src={chaletImg} alt="Chalet Savoia esterno" className="w-full h-full object-cover" />
+        </div>
+        <span className="block text-white/30 mt-2 text-right" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.55rem', letterSpacing: '0.1em' }}>EST. TONALE</span>
+      </div>
+
+      <div className="hero-scroll absolute bottom-6 left-[var(--space-gutter)] z-10 flex items-center gap-3">
+        <div className="w-[1px] h-12 bg-white/20 relative overflow-hidden"><div className="w-full h-4 bg-white/60 animate-bounce" /></div>
+        <span className="text-white/30" style={{ fontFamily: 'var(--font-accent)', fontSize: '0.6rem', letterSpacing: '0.15em', textTransform: 'uppercase', writingMode: 'vertical-rl' }}>Scroll</span>
       </div>
     </section>
   )
